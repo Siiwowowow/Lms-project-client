@@ -11,78 +11,34 @@ import SignUp from "../Component/SignUp/SignUp";
 import Login from "../Component/Login/Login";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Payment from "../Component/Payment/Payment";
-
+import MyCourses from "../Component/DashBoard/User/MyCourses";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element:<Roots></Roots>,
+    element: <Roots />, // main layout with navbar/footer
     children: [
-      {
-        index: true,
-        path: "/",
-        element: <HomePage></HomePage>,
-      }
-      ,
-      {
-         path:"/courses",
-          element:<Course></Course>
-
-      },
-      {
-         path:"/courses/:id",
-          element:<CourseDetails></CourseDetails>,
-          loader: ({params})=>fetch(`http://localhost:3000/courses/${params.id}`)
-           
-      },
-      {
-        path:"/payment/:courseId",
-        element:<Payment></Payment>
-      },
-      {
-        path: "/player/:id", // Add this new route
-        element: <VideoPlayer></VideoPlayer>,
-        loader: ({ params }) => fetch(`http://localhost:3000/courses/${params.id}`)
-      },
-      {
-         path:"/teachers",
-          element:<Teachers></Teachers>
-
-      },
-      {
-        path:"/dashboard",
-        element:<PrivateRoute><DashBoard></DashBoard></PrivateRoute>
-      },
-      {
-        path:"/contract",
-        element:<Contract></Contract>
-      },
-      {
-        path:"/signUp",
-        element:<SignUp></SignUp>
-      },
-      {
-        path:"/login",
-        element:<Login></Login>
-      },
-      
+      { index: true, element: <HomePage /> },
+      { path: "courses", element: <Course /> },
+      { path: "courses/:id", element: <CourseDetails />, loader: ({ params }) => fetch(`http://localhost:3000/courses/${params.id}`) },
+      { path: "payment/:courseId", element: <Payment /> },
+      { path: "player/:id", element: <VideoPlayer />, loader: ({ params }) => fetch(`http://localhost:3000/courses/${params.id}`) },
+      { path: "teachers", element: <Teachers /> },
+      { path: "contract", element: <Contract /> },
+      { path: "signUp", element: <SignUp /> },
+      { path: "login", element: <Login /> },
     ]
-    
   },
-  // {
-  //   path: "/",
-  //   element:<DashBoard></DashBoard>,
-  //   children:[
-  //     {
-  //       path:'/dashBoard/admin',
-  //       element:<Home></Home>
-
-  //     },
-  //     {
-  //       path:'/dashBoard/user',
-  //       element:<StudentHome></StudentHome>
-
-  //     }
-  //   ]
-  // }
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashBoard /> {/* dashboard with drawer, no navbar/footer */}
+      </PrivateRoute>
+    ),
+    children: [
+      { path: "my-courses", element: <MyCourses /> },
+      // add more user/admin dashboard routes here
+    ]
+  }
 ]);
