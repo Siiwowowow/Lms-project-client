@@ -11,6 +11,8 @@ import SignUp from "../Component/SignUp/SignUp";
 import Login from "../Component/Login/Login";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Payment from "../Component/Payment/Payment";
+
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -62,8 +64,25 @@ export const router = createBrowserRouter([
       {
         path:"/login",
         element:<Login></Login>
-      }
+      },
+      
     ]
     
   },
+  // {
+  //   path: "/",
+  //   element:<DashBoard></DashBoard>,
+  //   children:[
+  //     {
+  //       path:'/dashBoard/admin',
+  //       element:<Home></Home>
+
+  //     },
+  //     {
+  //       path:'/dashBoard/user',
+  //       element:<StudentHome></StudentHome>
+
+  //     }
+  //   ]
+  // }
 ]);
